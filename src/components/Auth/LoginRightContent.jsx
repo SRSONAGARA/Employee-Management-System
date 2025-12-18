@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const inputClasses = `
   w-full
@@ -15,12 +15,47 @@ const inputClasses = `
 `;
 
 const LoginRightContent = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    console.log(email, password);
+    
+    setEmail("");
+    setPassword("");
+  };
+
   return (
-    <div className="text-[#0e2dae] relative h-100 w-90 p-10 flex flex-col justify-center">
+    <form
+      onSubmit={(e) => {
+        submitHandler(e);
+      }}
+      className="text-[#0e2dae] relative h-100 w-90 p-10 flex flex-col justify-center"
+    >
       <h3 className="font-semibold text-[14px] ">Email address</h3>
-      <input type="text" placeholder="Enter your email" className={inputClasses} />
+      <input
+        required
+        type="email"
+        placeholder="Enter your email"
+        className={inputClasses}
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      />
       <h3 className="font-semibold text-[14px] ">Password</h3>
-      <input type="text" placeholder="Enter your password" className={inputClasses} />
+      <input
+        required
+        type="password"
+        placeholder="Enter your password"
+        className={inputClasses}
+        value={password}
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+      />
 
       <div className="flex justify-between px-4">
         <div className="flex items-center gap-2">
@@ -55,7 +90,7 @@ const LoginRightContent = () => {
       >
         Login
       </button>
-    </div>
+    </form>
   );
 };
 
