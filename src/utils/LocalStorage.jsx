@@ -40,19 +40,23 @@ export const getUsersData = () => {
   return JSON.parse(localStorage.getItem("users")) || [];
 };
 
-export const setLogin = (user) => {
-  localStorage.setItem("isLoggedIn", JSON.stringify(true));
-  localStorage.setItem("currentUser", JSON.stringify(user));
+export const setLogin = (user, remember) => {
+  const storage = remember ? localStorage : sessionStorage;
+
+  storage.setItem("isLoggedIn", JSON.stringify(true));
+  storage.setItem("currentUser", JSON.stringify(user));
 };
 
 export const getLogin = () => {
+  const storage = localStorage.getItem("isLoggedIn") ? localStorage : sessionStorage;
+
   return {
-    isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
-    currentUser: JSON.parse(localStorage.getItem("currentUser")),
+    isLoggedIn: JSON.parse(storage.getItem("isLoggedIn")) || false,
+    currentUser: JSON.parse(storage.getItem("currentUser")),
   };
 };
 
-export const logout = () => {
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("currentUser");
+export const clearLogin = () => {
+  localStorage.clear();
+  sessionStorage.clear();
 };

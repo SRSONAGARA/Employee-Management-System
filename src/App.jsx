@@ -3,20 +3,45 @@ import Login from "./pages/Login";
 import AdminDashbaord from "./pages/AdminDashbaord";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import { getLogin, getUsersData, setUsersData } from "./utils/LocalStorage";
+import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+// localStorage.clear();
+// sessionStorage.clear();
 
 const App = () => {
-  const [auth, setAuth] = useState({
-    isLoggedIn: false,
-    currentUser: null,
-  });
   useEffect(() => {
-    const loginData = getLogin();
-    setAuth(loginData);
+    if (!localStorage.getItem("users")) {
+      setUsersData();
+    }
   }, []);
 
-  if (!auth.isLoggedIn) return <Login setAuth={setAuth} />;
-  if (auth.currentUser.role === "admin") return <AdminDashbaord />;
-  return <EmployeeDashboard />;
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminDashbaord />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/employee"
+            element={
+              <ProtectedRoute role="employee">
+                <EmployeeDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 };
 
 export default App;

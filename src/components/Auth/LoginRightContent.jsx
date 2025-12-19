@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { getUsersData, setLogin } from "../../utils/LocalStorage";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const inputClasses = `
   w-full
@@ -18,6 +20,10 @@ const inputClasses = `
 const LoginRightContent = ({ setAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -38,12 +44,10 @@ const LoginRightContent = ({ setAuth }) => {
       role: user.role,
     };
 
-    setLogin(loggedUser);
-    setAuth({
-      isLoggedIn: true,
-      currentUser: loggedUser,
-    });
-    
+    login({ user: loggedUser, remember });
+
+    navigate(user.role === "admin" ? "/admin" : "/employee");
+
     setEmail("");
     setPassword("");
   };
@@ -80,7 +84,13 @@ const LoginRightContent = ({ setAuth }) => {
 
       <div className="flex justify-between px-4">
         <div className="flex items-center gap-2">
-          <input type="checkbox" id="remember" className="h-3 w-3 accent-[#0e2dae] cursor-pointer" />
+          <input
+            type="checkbox"
+            id="remember"
+            className="h-3 w-3 accent-[#0e2dae] cursor-pointer"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+          />
           <label htmlFor="remember" className="font-semibold text-[10px] cursor-pointer select-none">
             Remember me
           </label>

@@ -10,7 +10,7 @@
 //       <button
 //         className="bg-red-600 leading-none  rounded
 //             px-3 py-2
-           
+
 //             text-sm
 //             font-bold"
 //       >
@@ -22,10 +22,12 @@
 
 // export default EmployeeHeader;
 
-
 import React from "react";
+import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
+  const { logout } = useAuth();
+
   return (
     <div
       className="
@@ -48,6 +50,7 @@ const Header = () => {
 
       {/* Right Section */}
       <button
+        onClick={logout}
         className="
           flex items-center
           bg-linear-to-r from-red-500 to-red-700
