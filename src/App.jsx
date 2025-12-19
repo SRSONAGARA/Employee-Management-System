@@ -1,10 +1,14 @@
 import React from "react";
-import Login from "./components/Auth/Login";
+import Login from "./pages/Login";
+import AdminDashbaord from "./pages/AdminDashbaord";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
 
 const App = () => {
   return (
     <div>
-      <Login />
+      {/* <Login/> */}
+      <AdminDashbaord/>
+      {/* <EmployeeDashboard/> */}
     </div>
   );
 };

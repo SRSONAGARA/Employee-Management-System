@@ -1,6 +1,6 @@
 import React from "react";
-import LoginLeftContent from "./LoginLeftContent";
-import LoginRightContent from "./LoginRightContent";
+import LoginLeftContent from "../components/Auth/LoginLeftContent";
+import LoginRightContent from "../components/Auth/LoginRightContent";
 
 const Login = () => {
   return (
