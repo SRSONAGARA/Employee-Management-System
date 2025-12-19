@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getUsersData, setLogin } from "../../utils/LocalStorage";
 
 const inputClasses = `
   w-full
@@ -14,14 +15,34 @@ const inputClasses = `
   focus:shadow-[0_4px_12px_rgba(59,130,246,0.35)]
 `;
 
-const LoginRightContent = () => {
+const LoginRightContent = ({ setAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
 
+    const users = getUsersData();
+
+    const user = users.find((u) => u.email === email && u.password === password);
     console.log(email, password);
+
+    if (!user) {
+      alert("Invalid email or password");
+      return;
+    }
+
+    const loggedUser = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    setLogin(loggedUser);
+    setAuth({
+      isLoggedIn: true,
+      currentUser: loggedUser,
+    });
     
     setEmail("");
     setPassword("");

@@ -2,7 +2,7 @@ import React from "react";
 import LoginLeftContent from "../components/Auth/LoginLeftContent";
 import LoginRightContent from "../components/Auth/LoginRightContent";
 
-const Login = () => {
+const Login = ({setAuth}) => {
   return (
     <div
       className=" min-h-screen w-full
@@ -12,7 +12,7 @@ const Login = () => {
     >
       <div className="bg-[#f1f4fa] h-100 w-180 rounded-lg shadow-[0_0_10px_#ffffff] flex">
         <LoginLeftContent />
-        <LoginRightContent/>
+        <LoginRightContent  setAuth= {setAuth}/>
       </div>
     </div>
   );
