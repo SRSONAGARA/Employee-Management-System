@@ -1,7 +1,7 @@
 import React from "react";
 
 const CreateTask = () => {
-    
+
   const submitHandler = (e) => {
     e.preventDefault();
   };
@@ -9,7 +9,7 @@ const CreateTask = () => {
   return (
     <div
       className="
-        w-full max-w-6xl
+        w-full max-w-5xl
         bg-black/50 backdrop-blur-xl
         rounded-2xl
         p-8

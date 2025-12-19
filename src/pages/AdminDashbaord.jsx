@@ -1,6 +1,7 @@
-import React from 'react'
-import Header from '../components/Dashboard/Header';
-import CreateTask from '../components/Dashboard/CreateTask';
+import React from "react";
+import Header from "../components/Dashboard/Header";
+import CreateTask from "../components/Dashboard/CreateTask";
+import TaskList from "../components/Dashboard/TaskList";
 
 const AdminDashbaord = () => {
   return (
@@ -14,10 +15,11 @@ const AdminDashbaord = () => {
         bg-cover bg-center bg-no-repeat
         "
     >
-      <Header/>
-      <CreateTask/>
+      <Header />
+      <CreateTask />
+      <TaskList />
     </div>
   );
-}
+};
 
-export default AdminDashbaord
+export default AdminDashbaord;

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Dashboard/Header";
 import TasksCountSection from "../components/Dashboard/TasksCountSection";
-import TaskList from "../components/Tasks/TaskList";
+import TaskList from "../components/Dashboard/TaskList";
 
 const EmployeeDashboard = () => {
   return (
