@@ -3,10 +3,17 @@ import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, role }) => {
-  const { auth } = useAuth();
+  const { auth, isAuthReady } = useAuth();
 
-if (!auth.isLoggedIn) return <Navigate to="/" />;
-if (role && auth.currentUser?.role !== role) return <Navigate to="/" />;
+  // ⏳ wait until auth state is restored
+  if (!isAuthReady) return <div>Loading...</div>;
+
+  if (!auth.isLoggedIn) return <Navigate to="/" />;
+
+  if (role && auth.currentUser?.role !== role) {
+    return <Navigate to="/" />;
+  }
+
   return children;
 };
 

@@ -41,6 +41,8 @@ export const getUsersData = () => {
 };
 
 export const setLogin = (user, remember) => {
+  console.log(`====> remember in setLogin: ${remember}`);
+
   const storage = remember ? localStorage : sessionStorage;
 
   storage.setItem("isLoggedIn", JSON.stringify(true));
@@ -48,15 +50,29 @@ export const setLogin = (user, remember) => {
 };
 
 export const getLogin = () => {
-  const storage = localStorage.getItem("isLoggedIn") ? localStorage : sessionStorage;
+  if (localStorage.getItem("isLoggedIn")) {
+    return {
+      isLoggedIn: true,
+      currentUser: JSON.parse(localStorage.getItem("currentUser")),
+    };
+  }
+
+  if (sessionStorage.getItem("isLoggedIn")) {
+    return {
+      isLoggedIn: true,
+      currentUser: JSON.parse(sessionStorage.getItem("currentUser")),
+    };
+  }
 
   return {
-    isLoggedIn: JSON.parse(storage.getItem("isLoggedIn")) || false,
-    currentUser: JSON.parse(storage.getItem("currentUser")),
+    isLoggedIn: false,
+    currentUser: null,
   };
 };
 
 export const clearLogin = () => {
-  localStorage.clear();
-  sessionStorage.clear();
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("currentUser");
+  sessionStorage.removeItem("isLoggedIn");
+  sessionStorage.removeItem("currentUser");
 };
