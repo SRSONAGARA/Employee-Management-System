@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Dashboard/Header";
 import TasksCountSection from "../components/Dashboard/TasksCountSection";
 import TaskList from "../components/Dashboard/TaskList";
+import useTaskSummary from "../hooks/useTaskSummary";
 
 const EmployeeDashboard = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const { pending, in_progress, completed, overdue } = useTaskSummary(refreshKey);
+
+  const refreshDashboard = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
   return (
     <div
       className="text-white min-h-screen w-full
@@ -17,13 +24,13 @@ const EmployeeDashboard = () => {
     >
       <Header />
       <div className="flex gap-8 flex-wrap justify-center">
-        <TasksCountSection count={2} label="New Tasks" color="from-yellow-400 to-orange-600" />
-        <TasksCountSection count={5} label="In Progress" color="from-cyan-300 to-teal-500" />
-        <TasksCountSection count={3} label="Completed" color="from-emerald-400 to-green-600" />
-        <TasksCountSection count={1} label="Overdue" color="from-rose-500 to-red-700" />
+        <TasksCountSection count={pending} label="New Tasks" color="from-yellow-400 to-orange-600" />
+        <TasksCountSection count={in_progress} label="In Progress" color="from-cyan-300 to-teal-500" />
+        <TasksCountSection count={completed} label="Completed" color="from-emerald-400 to-green-600" />
+        <TasksCountSection count={overdue} label="Overdue" color="from-rose-500 to-red-700" />
       </div>
 
-      <TaskList/>
+      <TaskList onTaskUpdate={refreshDashboard} />
     </div>
   );
 };

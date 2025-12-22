@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getUsersData, setLogin } from "../../utils/LocalStorage";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 const inputClasses = `
   w-full
@@ -21,6 +22,7 @@ const LoginRightContent = ({ setAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -71,16 +73,24 @@ const LoginRightContent = ({ setAuth }) => {
         }}
       />
       <h3 className="font-semibold text-[14px] ">Password</h3>
-      <input
-        required
-        type="password"
-        placeholder="Enter your password"
-        className={inputClasses}
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
+      <div className="relative">
+        <input
+          required
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter your password"
+          className={`${inputClasses} pr-10`}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowPassword((prev) => !prev)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#0e2dae] transition"
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+      </div>
 
       <div className="flex justify-between px-4">
         <div className="flex items-center gap-2">

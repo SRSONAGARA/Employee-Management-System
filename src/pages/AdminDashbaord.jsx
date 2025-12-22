@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Dashboard/Header";
 import CreateTask from "../components/Dashboard/CreateTask";
-import TaskList from "../components/Dashboard/TaskList";
+import AdminTaskList from "../components/Dashboard/AdminTaskList";
 
 const AdminDashbaord = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshTasks = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
+
   return (
     <div
       className="text-white min-h-screen w-full
@@ -16,8 +22,8 @@ const AdminDashbaord = () => {
         "
     >
       <Header />
-      <CreateTask />
-      <TaskList />
+      <CreateTask onTaskCreated={refreshTasks} />
+      <AdminTaskList refreshKey={refreshKey} />
     </div>
   );
 };

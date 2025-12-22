@@ -1,32 +1,10 @@
-// import React from "react";
-
-// const EmployeeHeader = () => {
-//   return (
-//     <div className="w-full flex justify-between items-center border-2 border-b-red-500 m-4 p-4">
-//       <div>
-//         <h1 className="text-3xl font-semibold">Hello,</h1>
-//         <h1 className="text-4xl font-bold pb-2">Sagar 👋</h1>
-//       </div>
-//       <button
-//         className="bg-red-600 leading-none  rounded
-//             px-3 py-2
-
-//             text-sm
-//             font-bold"
-//       >
-//         Logout
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default EmployeeHeader;
-
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
-  const { logout } = useAuth();
+  const { auth, logout } = useAuth();
+  const rawName = auth.currentUser?.email?.split("@")[0] || "";
+  const name = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
   return (
     <div
@@ -44,7 +22,7 @@ const Header = () => {
       <div>
         <h1 className="text-lg text-white/70">Welcome back,</h1>
         <h1 className="text-4xl font-extrabold tracking-wide">
-          Sagar <span className="inline-block animate-wave">👋</span>
+          {name} <span className="inline-block animate-wave">👋</span>
         </h1>
       </div>
 
